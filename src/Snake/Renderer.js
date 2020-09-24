@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 
 export class Renderer {
-    constructor() {
-        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10);
-        this.camera.position.z = 10;
+    constructor(core) {
+        this.core = core;
+
+        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, Math.max(window.innerHeight, window.innerWidth));
+        this.camera.position.z = Math.max(window.innerHeight, window.innerWidth);
 
         this.scene = new THREE.Scene();
 
@@ -19,6 +21,8 @@ export class Renderer {
         this.updates = new Set();
 
         this.update();
+
+        this.core.viewport.layout(this.onResize);
     }
 
     update = () => {
@@ -36,11 +40,19 @@ export class Renderer {
      * @param {function(renderer, camera, scene)} fn
      * @returns {function(): void}
      */
-    addUpdate(fn){
+    addUpdate(fn) {
         this.updates.add(fn);
 
         return () => {
             this.updates.delete(fn);
         }
+    }
+
+    onResize = () => {
+        this.camera.aspect = this.core.viewport.width / this.core.viewport.height;
+        this.camera.far = Math.max(window.innerHeight, window.innerWidth);
+        this.camera.position.z = Math.max(window.innerHeight, window.innerWidth);
+        this.renderer.setSize(this.core.viewport.width, this.core.viewport.height);
+        this.camera.updateProjectionMatrix();
     }
 }

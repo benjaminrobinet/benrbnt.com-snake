@@ -3,9 +3,11 @@ import {Map as SMap} from "./Map";
 import {Renderer} from "./Renderer";
 import {Inputs} from "./Inputs";
 import {Loop} from "./Loop";
+import {Viewport} from "./Viewport";
 
 export class Core {
     constructor() {
+        this.viewport = new Viewport(this);
         this.renderer = new Renderer(this);
         this.loop = new Loop(this);
         this.map = new SMap(this);
@@ -18,7 +20,7 @@ export class Core {
     }
 
     build() {
-
+        this.viewport.onResize();
     }
 
     destroy() {
