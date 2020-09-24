@@ -4,6 +4,7 @@ export class Snake {
     constructor(core) {
         this.position = new Position(0, 0);
         this.direction = new Direction(0, 0);
+        this.tail = [];
         this.length = 1;
 
         this.grid = core.map.grid;

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {Food} from "./Food";
 
 export class Map {
     constructor(core) {
@@ -11,6 +12,8 @@ export class Map {
         this.planeMaterial = new THREE.MeshBasicMaterial({color: 0xbfcc03});
         this.plane = new THREE.Mesh(this.planeGeometry, this.planeMaterial);
 
+        this.currentFood = null;
+
         this.grid = {
             width: 10,
             height: 10,
@@ -21,7 +24,13 @@ export class Map {
         this.update = core.renderer.addUpdate((renderer, camera, scene) => {
 
         })
+
+        core.loop.addUpdate(this.handleFood);
     }
 
+    handleFood = () => {
+        if(this.currentFood !== null) return;
 
+        this.currentFood = new Food(5, 5);
+    }
 }
