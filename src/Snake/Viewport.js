@@ -1,5 +1,9 @@
 export class Viewport {
     constructor(core) {
+        /**
+         * @private
+         * @type {Set<any>}
+         */
         this.toLayout = new Set();
         this.attach()
     }

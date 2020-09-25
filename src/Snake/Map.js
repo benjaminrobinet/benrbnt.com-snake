@@ -32,11 +32,13 @@ export class Map {
         let vFov = this.core.renderer.camera.fov * Math.PI / 180;
         let planeHeightAtDistance = 2 * Math.tan(vFov / 2) * distance;
 
-        this.gridLines.scale.x = planeHeightAtDistance * this.core.renderer.camera.aspect - 50;
-        this.gridLines.scale.y = planeHeightAtDistance - 50;
+        let gridScale = Math.min(planeHeightAtDistance * this.core.renderer.camera.aspect, planeHeightAtDistance);
+        this.gridCellSize = gridScale / this.grid.width - 50;
+        this.gridLines.scale.x = this.gridCellSize * this.grid.width + this.gridCellSize;
+        this.gridLines.scale.y = this.gridCellSize * this.grid.height + this.gridCellSize;
 
-        this.plane.scale.x = planeHeightAtDistance * this.core.renderer.camera.aspect;
-        this.plane.scale.y = planeHeightAtDistance;
+        this.plane.scale.x = planeHeightAtDistance * this.core.renderer.camera.aspect + this.gridCellSize * 2;
+        this.plane.scale.y = planeHeightAtDistance + this.gridCellSize * 2;
     }
 
     handleFood = () => {

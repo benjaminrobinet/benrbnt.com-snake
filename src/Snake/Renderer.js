@@ -4,7 +4,7 @@ export class Renderer {
     constructor(core) {
         this.core = core;
 
-        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, Math.max(window.innerHeight, window.innerWidth));
+        this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.01, Math.max(window.innerHeight, window.innerWidth));
         this.camera.position.z = Math.max(window.innerHeight, window.innerWidth);
 
         this.scene = new THREE.Scene();
